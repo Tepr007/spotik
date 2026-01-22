@@ -1,0 +1,31 @@
+.add-button {
+    position: absolute;
+    top: calc(50% - 10px);
+    right: 35px;
+    width: 20px;
+    height: 20px;
+    background: none;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    transition: 0.2s;
+    display: none;
+}
+
+.add-button .addButtonImg {
+    fill: #ffffff;
+}
+
+.add-button:hover .addButtonImg {
+    fill: #1db954;
+}
+
+#track-list li:hover .add-button {
+    display: flex;
+}

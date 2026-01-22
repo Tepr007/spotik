@@ -1,0 +1,245 @@
+:root {
+  --bg: #111;
+  --bg1: #353535;
+  --text: #eee;
+}
+
+
+html, body {
+  overflow-x: hidden;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+}
+.title {
+  padding: 1em;
+}
+
+#page-title {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+
+
+/* Делаем контент гибким и адаптивным */
+#content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2em;
+  padding: 2em;
+  margin-bottom: 90px; /* Отступ снизу для now-playing-bar */
+}
+
+/* Левая колонка (треки) */
+#track-section {
+  flex: 2;
+}
+
+/* Правая колонка (плейлисты) */
+#playlist-section {
+  flex: 1;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  #content {
+    flex-direction: column; /* Вертикальная раскладка */
+  }
+
+  #playlist-section {
+    order: -1; /* Плейлисты идут первыми */
+  }
+}
+
+/* Стили для треков */
+ul#track-list {
+  align-self: left;
+  list-style-type: none;
+}
+
+#track-list li {
+  width: 20em;
+  max-width: 95%; /* Ограничиваем ширину */
+  /* height: 2em; */
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  padding: 0.25em 0;
+  transition: 0.2s;
+}
+
+#track-list li:hover {
+  color: #1db954;
+}
+
+.now_track {
+  color: #1db954;
+  font-weight: bold;
+}
+
+#track-list li .trackBG {
+  position: absolute;
+  top: 0;
+  left: -5em;
+  /* width: calc(100% + 5em); */
+  right: 0;
+  height: 100%; /* растягиваем по высоте li */
+  border-radius: 6px;
+  z-index: -1; /* фон под содержимым */
+  transition: background 0.2s;
+}
+
+#track-list li:hover .trackBG {
+  background-color: var(--bg1);
+}
+
+#track-list li .number {
+  width: 4em; /* фиксированная ширина */
+  text-align: right;
+  font-weight: bold;
+  margin-right: 0.5em;
+  position: absolute; /* для правильного позиционирования */
+  left: -5em; /* фиксированная позиция слева */
+  flex-shrink: 0; /* не сжимается на маленьких экранах */
+}
+
+#track-list li .trackContent {
+  position: relative; /* для правильного позиционирования */
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* предотвращает "выпирание" текста */
+  width: calc(100% - 75px); /* вычитаем ширину номера, ширину кнопок и отступы */
+}
+
+#track-list li .trackContent .trackName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 0.5em;
+}
+
+#track-list li .trackContent .trackAuthor {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: small;
+  color: #aaa;
+  margin-right: 0.5em;
+}
+
+#track-list li:hover .trackContent .trackName, #track-list li:hover .trackContent .trackAuthor{
+  white-space: normal; /* перенос */
+  overflow: visible;
+}
+
+
+
+
+
+/* Стили для плейлистов */
+ul#playlist-list {
+  list-style-type: none;
+  align-self: left;
+}
+
+#playlist-list li {
+  width: 17em;
+  display: flex;
+  font-size: large;
+  position: relative;
+  cursor: pointer;
+  padding: 0.5em 0;
+  transition: 0.2s;
+}
+
+#playlist-list li:hover {
+  color: #1db954;
+}
+
+.now_playlist {
+  color: #1db954;
+  font-weight: bold;
+}
+
+#playlist-list li .playlistBG {
+  position: absolute;
+  top: 0;
+  left: -2em;
+  width: calc(100% + 2em);
+  height: 100%; /* растягиваем по высоте li */
+  border-radius: 6px;
+  z-index: -1; /* фон под содержимым */
+  transition: background 0.2s;
+}
+
+#playlist-list li:hover .playlistBG {
+  background-color: #353535;
+}
+
+#playlist-list li:hover .marker {
+  transition: ease-out 0.3s;
+  transform: rotate(0deg); /* наклон маркера */
+}
+
+#playlist-list li .marker {
+  text-align: right;
+  font-weight: bold;
+  margin-right: 0.5em;
+  position: absolute; /* для правильного позиционирования */
+  left: -1.5em; /* фиксированная позиция слева */
+  flex-shrink: 0; /* не сжимается на маленьких экранах */
+  transition: ease-out 0.3s;
+  transform: rotate(-60deg); /* наклон маркера */
+}
+
+#playlist-list li .playlistName {
+  position: relative; /* для правильного позиционирования */
+  min-width: 0; /* предотвращает "выпирание" текста */
+  margin-right: 0.5em;
+  height: max-content;
+  width: calc(100% - 40px); /* вычитаем ширину кнопок и отступы */
+}
+
+#playback-order-section {
+  display: flex;
+  font-size: large;
+  cursor: pointer;
+  padding: 2em;
+  transition: 0.2s;
+  font-weight: bold;
+  gap: 0.5em;
+}
+
+#playback-order {
+  font-weight: normal;
+}
+
+#playback-order:hover {
+  color: #1db954;
+  font-weight: bold;
+}
+
+
+
+
+
+
+button.btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--accent);
+  cursor: pointer;
+  user-select: none;
+}
+
+.big {
+  font-size: 20px
+}

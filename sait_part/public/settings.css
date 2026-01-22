@@ -1,0 +1,64 @@
+#settings-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    height: 60px;
+    width: 60px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 501;
+    transition: 0.5s ease-in-out;
+}
+#settings-button .icon {
+    fill: rgb(255, 255, 255);
+}
+
+#settings-panel {
+    position: fixed;
+    top: 0;
+    right: -768px; /* скрываем панель за пределами экрана */
+    width: min(100%, 768px); /* максимальная ширина панели */
+    height: 100%;
+    background-color: #111;
+    display: flex;
+    flex-direction: column;
+    z-index: 500; /* чтобы панель была поверх других элементов */
+    transition: right 0.5s ease-in-out;
+    border: #000000 solid 3px; /* добавляем границу */
+}
+
+#settings-panel h2 {
+    margin-bottom: 1em;
+    margin-left: 2rem;
+}
+
+#settings-panel h3 {
+    margin-bottom: 1em;
+    margin-left: 3rem;
+}
+
+#settings-panel .neuro-mode-settings {
+    margin-left: 4rem;
+}
+
+#settings-panel .neuro-mode-settings label {
+    display: block;
+    margin-bottom: 1em;
+}
+
+#settings-panel .neuro-mode-settings button {
+    background-color: #282828;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s ease, border 0.2s ease;
+}
+
+#settings-panel .neuro-mode-settings button:hover {
+    background-color: #333;
+    border-color: #666;
+}

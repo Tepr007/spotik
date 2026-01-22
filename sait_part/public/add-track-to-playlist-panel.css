@@ -1,0 +1,100 @@
+#add-track-to-playlist-panel {
+    position: fixed;
+    top: 0;
+    right: -768px; /* скрываем панель за пределами экрана */
+    width: min(100%, 768px); /* максимальная ширина панели */
+    height: 100%;
+    background-color: #111;
+    display: flex;
+    flex-direction: column;
+    z-index: 600; /* чтобы панель была поверх других элементов */
+    transition: right 0.3s ease-in-out;
+    border: #000000 solid 3px; /* добавляем границу */
+}
+#add-track-to-playlist-panel .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #ffffff
+}
+
+#add-track-to-playlist-content {
+    flex: 1;
+    overflow-y: auto; /* добавляем прокрутку, если контент превышает высоту панели */
+    padding: 1em;
+    margin-bottom: 1em;
+    margin-left: 2em;
+}
+
+#add-track-to-playlist-content div {
+    margin-left: 3em;
+    font-size: large;
+    cursor: pointer;
+}
+
+#add-track-to-playlist-panel h2 {
+    margin-bottom: 1em;
+    margin-left: 2em;
+}
+
+
+
+#add-track-to-playlist-content div {
+    width: 15em;
+    display: flex;
+    font-size: large;
+    position: relative;
+    cursor: pointer;
+    padding: 0.5em 0;
+    transition: 0.2s;
+    margin-left: 3em;
+    align-items: center;
+}
+
+#add-track-to-playlist-content div:hover {
+  color: #1db954;
+}
+
+#add-track-to-playlist-content div .playlistBG {
+  position: absolute;
+  top: 0;
+  left: -4em;
+  width: calc(100% + 2em);
+  height: 100%; /* растягиваем по высоте li */
+  border-radius: 6px;
+  z-index: -1; /* фон под содержимым */
+  transition: background 0.2s;
+}
+
+#add-track-to-playlist-content div:hover .playlistBG {
+  background-color: #353535;
+}
+
+#add-track-to-playlist-content div:hover .marker {
+  transition: ease-out 0.3s;
+  stroke: #1db954;
+  transform: scale(1.2); /* увеличиваем маркер при наведении */
+}
+
+#add-track-to-playlist-content div:hover .marker path, #add-track-to-playlist-content div:hover .marker rect {
+  transition: ease-out 0.3s;
+  stroke: #1db954;
+}
+
+#add-track-to-playlist-content div .marker {
+    text-align: right;
+    font-weight: bold;
+    position: absolute; /* для правильного позиционирования */
+    transition: ease-out 0.3s;
+}
+
+#add-track-to-playlist-content div .playlistName {
+  position: relative; /* для правильного позиционирования */
+  min-width: 0; /* предотвращает "выпирание" текста */
+  margin-right: 0.5em;
+  height: max-content;
+}

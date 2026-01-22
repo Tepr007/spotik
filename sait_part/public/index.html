@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title id="page-title">Мой музыкальный плеер</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="icon.png" type="image/png">
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="add-playlist.css" />
+  <link rel="stylesheet" href="add-track.css" />
+  <link rel="stylesheet" href="delete-button.css" />
+  <link rel="stylesheet" href="download-button.css" />
+  <link rel="stylesheet" href="add-button.css" />
+  <link rel="stylesheet" href="add-track-to-playlist-panel.css" />
+  <link rel="stylesheet" href="modal.css" />
+  <link rel="stylesheet" href="settings.css" />
+  <link rel="stylesheet" href="now-playing-bar-desktop.css" media="(min-width: 769px)" />
+  <link rel="stylesheet" href="now-playing-bar-mobile.css" media="(max-width: 768px)" />
+</head>
+<body>
+  <h1 class="title">🎵 Мой музыкальный плеер</h1>
+  <div id="playback-order-section">
+    <span>
+      Режим воспроизведения:
+      <span id="playback-order" name="neuro">Нейро</span>
+    </span>
+  </div>
+
+  <div id="content">
+    <div id="track-section">
+      <h2>Треки</h2>
+      <ul id="track-list"></ul>
+      <div id="add-track">
+        <input type="url" id="new-track-url" placeholder="https://(open.spotify.com||www.youtube.com)/...">
+        <button onclick="handleAddTrack()">Добавить трек</button>
+      </div>
+    </div>
+
+    <div id="playlist-section">
+      <h2>Плейлисты</h2>
+      <ul id="playlist-list"></ul>
+      <div id="add-playlist">
+        <input type="text" id="new-playlist-name" placeholder="Название плейлиста">
+        <input type="url" id="new-playlist-url" placeholder="https://open.spotify.com/(playlist||albom)/...">
+        <button onclick="handleAddPlaylist()">Добавить плейлист / альбом</button>
+      </div> 
+    </div>
+  </div>
+  <div id="add-track-to-playlist-panel">
+    <button class="close-button" onclick="close_add_track_to_playlist_panel()">✖</button>
+    <h2>Добавить трек в плейлист</h2>
+    <div id="add-track-to-playlist-content">
+    </div>
+
+  </div>
+
+  <button id="settings-button" onclick="openSettings()">
+    <svg class="icon" xmlns="http://www.w3.org/2000/svg" 
+         viewBox="0 0 52 52" enable-background="new 0 0 52 52" xml:space="preserve">
+      <g>
+        <path d="M26.1,19.1c-3.9,0-7,3.1-7,7s3.1,7,7,7s7-3.1,7-7S30,19.1,26.1,19.1z"/>
+        <path d="M47.1,32.4l-3.7-3.1c0.2-1.1,0.3-2.3,0.3-3.4c0-1.1-0.1-2.3-0.3-3.4l3.7-3.1c1.2-1,1.6-2.8,0.8-4.2
+          l-1.6-2.8c-0.6-1-1.7-1.6-2.9-1.6c-0.4,0-0.8,0.1-1.1,0.2l-4.6,1.7c-1.8-1.6-3.8-2.7-5.9-3.4L31,4.6c-0.3-1.6-1.7-2.5-3.3-2.5h-3.2
+          c-1.6,0-3,0.9-3.3,2.5l-0.8,4.6c-2.2,0.7-4.2,1.9-6,3.4l-4.6-1.7c-0.4-0.1-0.7-0.2-1.1-0.2c-1.2,0-2.3,0.6-2.9,1.6l-1.6,2.8
+          c-0.8,1.4-0.5,3.2,0.8,4.2l3.7,3.1c-0.2,1.1-0.3,2.3-0.3,3.4c0,1.2,0.1,2.3,0.3,3.4L5,32.3c-1.2,1-1.6,2.8-0.8,4.2l1.6,2.8
+          c0.6,1,1.7,1.6,2.9,1.6c0.4,0,0.8-0.1,1.1-0.2l4.6-1.7c1.8,1.6,3.8,2.7,5.9,3.4l0.8,4.8c0.3,1.6,1.6,2.7,3.3,2.7h3.2
+          c1.6,0,3-1.2,3.3-2.8l0.8-4.8c2.3-0.8,4.4-2,6.2-3.7l4.3,1.7c0.4,0.1,0.8,0.2,1.2,0.2c1.2,0,2.3-0.6,2.9-1.6l1.5-2.6
+          C48.7,35.2,48.3,33.4,47.1,32.4z M26.1,37.1c-6.1,0-11-4.9-11-11s4.9-11,11-11s11,4.9,11,11S32.2,37.1,26.1,37.1z"/>
+      </g>
+    </svg>
+  </button>
+  <div id="settings-panel">
+    <h2>Настройки</h2>
+    <h3>Настройки нейро-режима</h3>
+    <div class="neuro-mode-settings">
+      <label>
+        Вероятность треков из плейлиста:
+        <input type="range" id="probability_tracks_from_playlist" min="0" max="100" value="50" 
+               oninput="document.getElementById('probability_tracks_from_playlist_value').value = this.value">
+        <input type="number" id="probability_tracks_from_playlist_value" min="0" max="100" value="50" 
+               oninput="document.getElementById('probability_tracks_from_playlist').value = this.value">%
+      </label>
+      <label>
+        Чувствительность к расстоянию:
+        <input type="range" id="sensitivity" min="0" max="100" value="50" 
+               oninput="document.getElementById('sensitivity_value').value = this.value">
+        <input type="number" id="sensitivity_value" min="0" max="100" value="50" 
+               oninput="document.getElementById('sensitivity').value = this.value">%
+      </label>
+      <button onclick="saveSettings()">Сохранить настройки</button>
+    </div>
+  </div>
+  <div class="now-playing-bar">
+    <audio id="audio-player"></audio>
+
+    <div class="track-info">
+      <div class="cover"></div>
+      <div class="text-info">
+        <div class="track-title"></div>
+        <div class="track-artist"></div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="buttons">
+        <button id="prev">⏮</button>
+        <button id="play" >⏸</button>
+        <button id="next">⏭</button>
+      </div>
+      <div class="progress-container">
+        <span class="time" id="current-time">0:00</span>
+        <input type="range" class="progress" min="0" value="0" id="progress-bar">
+        <span class="time" id="duration">0:00</span>
+      </div>
+    </div>
+
+    <div class="volume">
+      🔊
+      <input type="range" min="0" max="100" value="100" id="volume-control">
+    </div>
+  </div>
+  <div id="modal">
+    <div id="modal-content">
+    </div>
+  </div>
+
+  <!-- Скрипты -->
+  <script src="script.js"></script>
+  <script src="player.js"></script>
+  <script src="track-logic.js"></script>
+  <script src="playlist-list.js"></script>
+  <script src="track-list.js"></script>
+  <script src="playback-order.js"></script>
+  <script src="add-playlist.js"></script>
+  <script src="add-track.js"></script>
+  <script src="add-track-to-playlist-panel.js"></script>
+  <script src="settings.js"></script>
+
+  <!-- консоль -->
+  <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+  <script>eruda.init();</script>
+
+</body>
+</html>

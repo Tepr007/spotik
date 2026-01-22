@@ -1,0 +1,2 @@
+Current working directory: C:\Users\Tepr\PycharmProjects\spotik\sait_part
+Absolute path to comment.txt: C:\Users\Tepr\PycharmProjects\spotik\sait_part\comment.txt
