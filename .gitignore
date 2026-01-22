@@ -1,0 +1,12 @@
+.idea
+.venv
+.openl3-env
+__pycache__
+*.pyc
+music/*.mp3
+music_embeddings/*.npy
+passwords.json
+playlists.json
+private_settings.json
+public_settings.json
+tracks.json
