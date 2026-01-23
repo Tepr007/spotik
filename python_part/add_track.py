@@ -244,11 +244,11 @@ def delete_unfinished_tracks():
 
 
 if __name__ == "__main__":
-    # args = sys.argv
-    # TRACK_URL = args[1]
-    # PLAYLIST_name = args[2]
-    TRACK_URL = "https://open.spotify.com/track/6bX8I0kg3J6IXWVlyVknh1?si=edd0ab61543e455f"
-    PLAYLIST_name = "Все треки"
+    args = sys.argv
+    TRACK_URL = args[1]
+    PLAYLIST_name = args[2]
+    # TRACK_URL = "https://open.spotify.com/track/6bX8I0kg3J6IXWVlyVknh1?si=edd0ab61543e455f"
+    # PLAYLIST_name = "Все треки"
 
     match TRACK_URL.split('/')[2]:
         case "open.spotify.com":
