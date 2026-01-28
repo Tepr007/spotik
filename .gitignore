@@ -3,8 +3,8 @@
 openl3-env
 __pycache__
 *.pyc
-music/
-music_embeddings/
+music/*.mp3
+music_embeddings/*.npy
 passwords.json
 private_settings.json
 public_settings.json
