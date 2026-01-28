@@ -410,13 +410,13 @@ app.delete("/delete_playlist", async (req, res) => {
     });
 });
 
-function checkSetting(key) {
+function checkSetting(key, value) {
     switch (key) {
-        case 'probability_tracks_from_playlist':
+        case 'Probability_tracks_from_playlist':
             return typeof value === 'number' && value >= 0 && value <= 1;
-        case 'sensitivity':
+        case 'Sensitivity':
             return typeof value === 'number' && value >= 0 && value <= 1;
-        case 'enable_passwords':
+        case 'Enable_passwords':
             return typeof value === 'bool';
         default:
             // неизвестный ключ запрещён
@@ -429,7 +429,7 @@ app.post('/save_settings', async (req, res) => {
     const password = req.body.password;
     const action = req.body.action;
 
-    if (!password || !action || !await checkPassword(password, action)) {
+    if (!await checkPassword(password, action)) {
         res.json({
                 message: 'Неверный пароль'
             });
@@ -441,7 +441,7 @@ app.post('/save_settings', async (req, res) => {
 
         let settings = JSON.parse(settingsData);
         for (const key in params) {
-            if (!checkSetting(key)) return res.status(500).send('Некорректные значения');
+            if (!checkSetting(key, params[key])) return res.status(500).send('Некорректные значения');
             if (Object.prototype.hasOwnProperty.call(settings, key)) {
                 settings[key] = params[key];
             }

@@ -33,6 +33,16 @@ async function saveSettings() {
     const probabilityTracksFromPlaylist = document.getElementById('probability_tracks_from_playlist').value;
     const sensitivity = document.getElementById('sensitivity').value;
 
+    if (!await fetch(`/passwords_is_enabled`)
+    .then(res => res.json())
+    .then(passwords_is_enabled => {
+        return passwords_is_enabled;
+    })) {
+        if (!await my_confirm("Вы уверены, что хотите удалить трек из плейлиста?", "Да", "Нет")) {
+            return;
+        }
+    }
+    
     let password = await input_password();
     if (password === undefined) {
         return;
