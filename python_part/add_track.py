@@ -148,7 +148,7 @@ def download_track_from_youtube(url, PLAYLIST_name):
         output_path = os.path.join(output_dir, f"{track_id}.%(ext)s")
 
         ydl_opts = {
-            "cookiesfrombrowser": ("firefox",),
+            # "cookiesfrombrowser": ("firefox",),
             'format': 'bestaudio/best',
             'outtmpl': output_path,
             'quiet': True,
@@ -188,6 +188,7 @@ def download_track_from_youtube(url, PLAYLIST_name):
                     print("Приватное видео")
                 else:
                     print("Другая ошибка yt-dlp:", msg)
+                    delete_unfinished_tracks()
                 return e
 
             except TrackAlreadyDownloaded:
@@ -247,7 +248,7 @@ if __name__ == "__main__":
     args = sys.argv
     TRACK_URL = args[1]
     PLAYLIST_name = args[2]
-    # TRACK_URL = "https://open.spotify.com/track/6bX8I0kg3J6IXWVlyVknh1?si=edd0ab61543e455f"
+    # TRACK_URL = "https://youtu.be/AgYBNw5_ce0?si=KqYGRDBai0PIGPw4"
     # PLAYLIST_name = "Все треки"
 
     match TRACK_URL.split('/')[2]:
