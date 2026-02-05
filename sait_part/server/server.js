@@ -16,6 +16,7 @@ let rl; // Глобальная переменная для интерфейса
 const rootDir = path.join(__dirname, '..');
 const passwordsFile = path.join(rootDir, '..', 'passwords.json'); // Путь к файлу passwords.json
 const musicDir = path.join(rootDir, '..', 'music'); // Путь к директории с музыкой
+const embeddingsDir = path.join(rootDir, '..', 'music_embeddings'); // Путь к директории с embeddings
 const playlistsFile = path.join(rootDir, '..', 'playlists.json'); // Путь к файлу playlists.json
 const tracksFile = path.join(rootDir, '..', 'tracks.json'); // Путь к файлу tracks.json
 const settingsFile = path.join(rootDir, '..', 'public_settings.json'); // Путь к файлу public_settings.json
@@ -606,6 +607,13 @@ function findPython(version) {
         settings = JSON.parse(await fs.promises.readFile(PRIVATEsettingsFile, 'utf-8'));
     } catch (err) {
         settings = { Debug: false, Enable_passwords: false };
+    }
+
+    if (!fs.existsSync(musicDir)) {
+        fs.mkdirSync(musicDir, { recursive: true });
+    }
+    if (!fs.existsSync(embeddingsDir)) {
+        fs.mkdirSync(embeddingsDir, { recursive: true });
     }
 
     const python312 = findPython('3.12');
