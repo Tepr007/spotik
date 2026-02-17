@@ -27,20 +27,11 @@
     transition: right 0.5s ease-in-out;
     border: #000000 solid 3px; /* добавляем границу */
 }
-
-#settings-panel h2 {
+.new-paragraph {
+    padding-left: 2em;
     margin-bottom: 1em;
-    margin-left: 2rem;
 }
 
-#settings-panel h3 {
-    margin-bottom: 1em;
-    margin-left: 3rem;
-}
-
-#settings-panel .neuro-mode-settings {
-    margin-left: 4rem;
-}
 
 #settings-panel .neuro-mode-settings label {
     display: block;

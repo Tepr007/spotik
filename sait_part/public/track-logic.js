@@ -37,6 +37,12 @@ async function updateInternetStatus() {
     }
 }
 
+async function stopTrackForTimer() {
+    if (localStorage.getItem("timer") == Date.now() && !audio.paused) {
+        playBtn.click();
+    }
+}
+
 // Проверка каждые 10 секунд
 setInterval(updateInternetStatus, 10000);
 updateInternetStatus(); // сразу первая проверка

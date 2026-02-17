@@ -70,24 +70,34 @@
       </g>
     </svg>
   </button>
-  <div id="settings-panel">
+  <div id="settings-panel" class="new-paragraph">
     <h2>Настройки</h2>
-    <h3>Настройки нейро-режима</h3>
-    <div class="neuro-mode-settings">
-      <label>
-        Вероятность треков из плейлиста:
-        <input type="range" id="probability_tracks_from_playlist" min="0" max="100" value="50" 
-               oninput="document.getElementById('probability_tracks_from_playlist_value').value = this.value">
-        <input type="number" id="probability_tracks_from_playlist_value" min="0" max="100" value="50" 
-               oninput="document.getElementById('probability_tracks_from_playlist').value = this.value">%
-      </label>
-      <label>
-        Чувствительность к расстоянию:
-        <input type="range" id="sensitivity" min="0" max="100" value="50" 
-               oninput="document.getElementById('sensitivity_value').value = this.value">
-        <input type="number" id="sensitivity_value" min="0" max="100" value="50" 
-               oninput="document.getElementById('sensitivity').value = this.value">%
-      </label>
+    <div id="settings" class="new-paragraph"> 
+      <h3>Настройки нейро-режима</h3>
+      <div class="neuro-mode-settings new-paragraph">
+        <label>
+          Вероятность треков из плейлиста:
+          <input type="range" id="probability_tracks_from_playlist" min="0" max="100" value="50" 
+                oninput="document.getElementById('probability_tracks_from_playlist_value').value = this.value">
+          <input type="number" id="probability_tracks_from_playlist_value" min="0" max="100" value="50" 
+                oninput="document.getElementById('probability_tracks_from_playlist').value = this.value">%
+        </label>
+        <label>
+          Чувствительность к расстоянию:
+          <input type="range" id="sensitivity" min="0" max="100" value="50" 
+                oninput="document.getElementById('sensitivity_value').value = this.value">
+          <input type="number" id="sensitivity_value" min="0" max="100" value="50" 
+                oninput="document.getElementById('sensitivity').value = this.value">%
+        </label>
+      </div>
+      <h3>Прочее</h3>
+      <div class="timer-settings new-paragraph">
+        <label>
+          Таймер:
+          <input type="time" id="timer" step="1" min="0" max="1000" value="0" 
+                oninput="document.getElementById('timer').value = this.value">
+        </label>
+      </div>
       <button onclick="saveSettings()">Сохранить настройки</button>
     </div>
   </div>

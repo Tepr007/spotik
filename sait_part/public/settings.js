@@ -19,6 +19,19 @@ function openSettings() {
         document.getElementById('sensitivity').value = settings.Sensitivity * 100;
         document.getElementById('probability_tracks_from_playlist_value').value = settings.Probability_tracks_from_playlist * 100;
         document.getElementById('sensitivity_value').value = settings.Sensitivity * 100;
+        console.log(localStorage.key("timer"));
+        if (localStorage.key("timer") && Number(localStorage.getItem("timer")) > 0) {
+            let hours = Math.max(Math.floor((localStorage.getItem("timer") - Date.now()) / (1000 * 60 * 60)), 0);
+            let minutes = Math.max(Math.floor(((localStorage.getItem("timer") - Date.now()) / (1000 * 60)) % 60), 0);
+            let seconds = Math.max(Math.floor(((localStorage.getItem("timer") - Date.now()) / 1000) % 60), 0);
+            document.getElementById('timer').value = String(hours).padStart(2, "0") + ":" +
+            String(minutes).padStart(2, "0") + ":" +
+            String(seconds).padStart(2, "0");
+        }
+        else {
+            localStorage.removeItem("timer");
+            document.getElementById('timer').value = `00:00:00`;
+        }
     })
     settingsPanel.style.right = '0';
     settingsButton.style.transform = 'rotate(-180deg)';
@@ -38,7 +51,7 @@ async function saveSettings() {
     .then(passwords_is_enabled => {
         return passwords_is_enabled;
     })) {
-        if (!await my_confirm("Вы уверены, что хотите удалить трек из плейлиста?", "Да", "Нет")) {
+        if (!await my_confirm("Вы уверены, что хотите сохранить настройки?", "Да", "Нет")) {
             return;
         }
     }
@@ -72,7 +85,11 @@ async function saveSettings() {
             }
             throw new Error(msg);
         }
-
+        let parts = document.getElementById('timer').value.split(":");
+        let hours = Number(parts[0])
+        let minutes = Number(parts[1])
+        let seconds = Number(parts[2])
+        localStorage.setItem("timer", Date.now() + ((hours * 60 + minutes) * 60 + seconds) * 1000);
         return res.json();
     })
     .then(async response => {
