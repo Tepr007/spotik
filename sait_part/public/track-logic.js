@@ -57,13 +57,13 @@ async function stopTrackForTimer() {
     }
 }
 async function trackFading() {
-    if (volumeControl.value == 0) {
+    if (audio.volume == 0) {
         playBtn.click();
         clearInterval(trackFading_id)
         audio.volume = volumeControl.value / 100;
         return;
     }
-    audio.volume = audio.volume - 0.01;
+    audio.volume = Math.max(audio.volume - 0.01, 0);
 }
 // проверка таймера каждую секунду
 setInterval(stopTrackForTimer, 1000);
