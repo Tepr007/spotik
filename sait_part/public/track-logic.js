@@ -60,9 +60,10 @@ async function trackFading() {
     if (volumeControl.value == 0) {
         playBtn.click();
         clearInterval(trackFading_id)
+        audio.volume = volumeControl.value / 100;
+        return;
     }
-    volumeControl.value = volumeControl.value - 1;
-    audio.volume = volumeControl.value / 100;
+    audio.volume = volumeControl.value - 0.01;
 }
 // проверка таймера каждую секунду
 setInterval(stopTrackForTimer, 1000);
