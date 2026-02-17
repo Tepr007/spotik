@@ -63,7 +63,7 @@ async function trackFading() {
         audio.volume = volumeControl.value / 100;
         return;
     }
-    audio.volume = audio.value - 0.01;
+    audio.volume = audio.volume - 0.01;
 }
 // проверка таймера каждую секунду
 setInterval(stopTrackForTimer, 1000);
