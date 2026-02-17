@@ -36,16 +36,37 @@ async function updateInternetStatus() {
         isOnline = false;
     }
 }
-
-async function stopTrackForTimer() {
-    if (localStorage.getItem("timer") == Date.now() && !audio.paused) {
-        playBtn.click();
-    }
-}
-
 // Проверка каждые 10 секунд
 setInterval(updateInternetStatus, 10000);
 updateInternetStatus(); // сразу первая проверка
+
+let trackFading_id;
+async function stopTrackForTimer() {
+    if (!localStorage.key("timer")) {
+        return;
+    }
+    if (localStorage.getItem("timer") < Date.now()) {
+        localStorage.removeItem("timer");
+        return;
+    }
+    if (localStorage.getItem("timer") - Date.now() < 1000 && !audio.paused) {
+        localStorage.removeItem("timer");
+        
+        trackFading_id = setInterval(trackFading, 100);
+        trackFading();
+    }
+}
+async function trackFading() {
+    if (volumeControl.value == 0) {
+        playBtn.click();
+        clearInterval(trackFading_id)
+    }
+    volumeControl.value = volumeControl.value - 1;
+    audio.volume = volumeControl.value / 100;
+}
+// проверка таймера каждую секунду
+setInterval(stopTrackForTimer, 1000);
+stopTrackForTimer(); // сразу первая проверка
 
 async function determineNextTrack() {
     //NextTrackInfo = null; // Сбрасываем следующий трек
