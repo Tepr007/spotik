@@ -25,6 +25,7 @@ with open("../private_settings.json", 'r', encoding="utf-8") as file:
 output_dir = "../music"
 FFMPEG_PATH = "../.ffmpeg/bin/ffmpeg.exe"
 FFMPEG_PARENT_PATH = "../.ffmpeg/bin"
+COOKIES_PATH = "../cookies.txt"
 
 os.makedirs(output_dir, exist_ok=True)
 
@@ -110,10 +111,18 @@ def download_track_from_spotify(url, PLAYLIST_name):
 
 def get_youtube_metadata(url):
     ydl_opts = {
-        "cookiesfrombrowser": ("firefox",),
+        # "cookiesfrombrowser": ("firefox",),
+        "cookies": COOKIES_PATH,
         "quiet": True,
-        "skip_download": True,
+        # "format": "bestaudio",
+        # "js_runtimes": {"node": {"path": r"C:\Program Files\nodejs"}},
+        # "extractor_args": {
+        #     "youtube": {
+        #         "player_client": ["web"]
+        #     }
+        # }
     }
+
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         try:
@@ -149,20 +158,24 @@ def download_track_from_youtube(url, PLAYLIST_name):
 
         ydl_opts = {
             # "cookiesfrombrowser": ("firefox",),
-            'format': 'bestaudio/best',
-            'outtmpl': output_path,
-            'quiet': True,
-            'ffmpeg_location': FFMPEG_PARENT_PATH,
-            'writethumbnail': True,
-            'prefer_ffmpeg': True,
-            'postprocessors': [
+            "cookies": COOKIES_PATH,
+            "format": "bestaudio",
+            "outtmpl": output_path,
+            "quiet": True,
+            "ffmpeg_location": FFMPEG_PARENT_PATH,
+            "writethumbnail": True,
+            "postprocessors": [
                 {
-                    'key': 'FFmpegExtractAudio',
-                    'preferredcodec': 'mp3',
-                    'preferredquality': '192',
+                    "key": "FFmpegExtractAudio",
+                    "preferredcodec": "mp3",
+                    "preferredquality": "192",
                 },
-                {'key': 'EmbedThumbnail'},
-                {'key': 'FFmpegMetadata'},
+                {
+                    "key": "EmbedThumbnail",
+                },
+                {
+                    "key": "FFmpegMetadata",
+                },
             ],
         }
 

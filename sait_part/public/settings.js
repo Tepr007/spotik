@@ -19,7 +19,6 @@ function openSettings() {
         document.getElementById('sensitivity').value = settings.Sensitivity * 100;
         document.getElementById('probability_tracks_from_playlist_value').value = settings.Probability_tracks_from_playlist * 100;
         document.getElementById('sensitivity_value').value = settings.Sensitivity * 100;
-        console.log(localStorage.key("timer"));
         if (localStorage.key("timer") && Number(localStorage.getItem("timer")) > 0) {
             let hours = Math.max(Math.floor((localStorage.getItem("timer") - Date.now()) / (1000 * 60 * 60)), 0);
             let minutes = Math.max(Math.floor(((localStorage.getItem("timer") - Date.now()) / (1000 * 60)) % 60), 0);
