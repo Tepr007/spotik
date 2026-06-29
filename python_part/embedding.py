@@ -92,23 +92,26 @@ def make_embedding_for_track(track):
     # # Загружаем и настраиваем модель CLAP
     # model = laion_clap.CLAP_Module(enable_fusion=False)
     # model.load_ckpt()
-
-    filename = f"{track}.mp3"
-    if filename.endswith(".mp3"):
-        song_name = os.path.splitext(filename)[0]
-        mp3_path = os.path.join(input_dir, filename)
-        try:
-            emb = extract_embedding(mp3_path)
-            save_path = os.path.join(output_dir, f"{song_name}.npy")
-            np.save(save_path, emb)
-            print(f"[✓] Обработано: {filename}")
-        except Exception as e:
-            if debug:
-                with open("log.txt", "w", encoding="utf-8") as f:
-                    f.write(f"[!] Ошибка при обработке {filename}: {e}")
-                print(f"[!] Ошибка при обработке {filename}: {e}")
-            else:
-                print(f"[!] Ошибка при обработке {filename}")
+    try:
+        filename = f"{track}.mp3"
+        if filename.endswith(".mp3"):
+            song_name = os.path.splitext(filename)[0]
+            mp3_path = os.path.join(input_dir, filename)
+            try:
+                emb = extract_embedding(mp3_path)
+                save_path = os.path.join(output_dir, f"{song_name}.npy")
+                np.save(save_path, emb)
+                print(f"[✓] Обработано: {filename}")
+            except Exception as e:
+                if debug:
+                    with open("log.txt", "w", encoding="utf-8") as f:
+                        f.write(f"[!] Ошибка при обработке {filename}: {e}")
+                    print(f"[!] Ошибка при обработке {filename}: {e}")
+                else:
+                    print(f"[!] Ошибка при обработке {filename}")
+    except Exception as e:
+        with open("log.txt", "w", encoding="utf-8") as f:
+            f.write(f"[!] Ошибка при обработке {filename}: {e}")
 def make_embedding_for_tracks(tracks):
     # import laion_clap
     # # Загружаем и настраиваем модель CLAP
