@@ -104,6 +104,8 @@ def make_embedding_for_track(track):
             print(f"[✓] Обработано: {filename}")
         except Exception as e:
             if debug:
+                with open("log.txt", "w", encoding="utf-8") as f:
+                    f.write(f"[!] Ошибка при обработке {filename}: {e}")
                 print(f"[!] Ошибка при обработке {filename}: {e}")
             else:
                 print(f"[!] Ошибка при обработке {filename}")
