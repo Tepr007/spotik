@@ -107,11 +107,7 @@ def extract_mp3_metadata(fname: str) -> Dict[str, Optional[str]]:
 
 def add_track(track_id):
     with open("../tracks.json", 'r', encoding="utf-8") as file:
-        tracks = {}
-        for track_id, track in ijson.kvitems(file, ""):
-            track.pop("cover", None)
-            tracks[track_id] = track
-        # tracks = json.load(file)
+        tracks = json.load(file)
     fname = f"{track_id}.mp3"
     tracks[track_id] = extract_mp3_metadata(fname)
 
