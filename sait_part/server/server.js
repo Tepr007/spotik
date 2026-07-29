@@ -16,6 +16,7 @@ let rl; // Глобальная переменная для интерфейса
 const rootDir = path.join(__dirname, '..');
 const passwordsFile = path.join(rootDir, '..', 'passwords.json'); // Путь к файлу passwords.json
 const musicDir = path.join(rootDir, '..', 'music'); // Путь к директории с музыкой
+const coversDir = path.join(rootDir, '..', 'covers'); // Путь к директории с обложками
 const embeddingsDir = path.join(rootDir, '..', 'music_embeddings'); // Путь к директории с embeddings
 const playlistsFile = path.join(rootDir, '..', 'playlists.json'); // Путь к файлу playlists.json
 const tracksFile = path.join(rootDir, '..', 'tracks.json'); // Путь к файлу tracks.json
@@ -24,6 +25,7 @@ const PRIVATEsettingsFile = path.join(rootDir, '..', 'private_settings.json'); /
 
 // Обслуживание статических файлов из директории music
 app.use('/music', express.static(musicDir));
+app.use('/covers', express.static(coversDir));
 app.use(express.static(path.join(rootDir, 'public'))); // Обслуживание index.html, script.js и т.д.
 app.use(express.json()); // Для парсинга application/json
 // app.use(require('cors')());

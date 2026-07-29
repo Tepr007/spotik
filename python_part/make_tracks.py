@@ -2,6 +2,8 @@ import os
 import ijson
 import json
 import base64
+import hashlib
+from pathlib import Path
 from mutagen.id3 import ID3, APIC, TIT2, TPE1, TALB
 from typing import Optional, Dict
 import io
@@ -74,12 +76,13 @@ def extract_mp3_metadata(fname: str) -> Dict[str, Optional[str]]:
         album = album_tag.text[0] if album_tag else None
 
         # Обложка
-        cover_data = None
+        cover_path = None
         for tag in tags.values():
             if isinstance(tag, APIC):
                 mime = tag.mime  # например: "image/jpeg" или "image/png"
                 cover_data = f"data:{mime};base64," + base64.b64encode(tag.data).decode("utf-8")
                 cover_data = compress_cover_base64(cover_data)
+                cover_path = save_cover(cover_data, mime)
                 break
 
         return {
@@ -88,7 +91,7 @@ def extract_mp3_metadata(fname: str) -> Dict[str, Optional[str]]:
             "name": title,
             "author": artist.replace('/', ', '),
             "album": album,
-            "cover": cover_data
+            "cover": cover_path
         }
 
     except Exception as e:
@@ -104,6 +107,24 @@ def extract_mp3_metadata(fname: str) -> Dict[str, Optional[str]]:
             "album": None,
             "cover": None
         }
+def save_cover(cover_data: str, mime: str = "image/jpeg") -> str:
+    COVERS_DIR = Path('../covers')
+    COVERS_DIR.mkdir(parents=True, exist_ok=True)
+
+    if cover_data.startswith("data:"):
+        header, cover_data = cover_data.split(",", 1)
+        mime = header.split(":")[1].split(";")[0]  # достаём mime из префикса
+
+    cover_bytes = base64.b64decode(cover_data)
+    file_hash = hashlib.sha256(cover_bytes).hexdigest()
+
+    ext = "png" if "png" in mime else "jpg"
+    cover_path = COVERS_DIR / f"{file_hash}.{ext}"
+
+    if not cover_path.exists():
+        cover_path.write_bytes(cover_bytes)
+
+    return f"/covers/{file_hash}.{ext}"
 
 def add_track(track_id):
     with open("../tracks.json", 'r', encoding="utf-8") as file:

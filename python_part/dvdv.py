@@ -9,11 +9,7 @@ music_path = r"../music"
 music_embeddings_path = r"../music_embeddings"
 
 with open("../tracks.json", 'r', encoding="utf-8") as file:
-    tracks = {}
-    for track_id, track in ijson.kvitems(file, ""):
-        track.pop("cover", None)
-        tracks[track_id] = track
-    # tracks = json.load(file)
+    tracks = json.load(file)
 with open("../playlists.json", 'r', encoding="utf-8") as file:
     playlists = json.load(file)
 
@@ -132,28 +128,16 @@ def delete_track(id):
 #
 #     fig.show()
 
-num_to_id = dict()
-def tracks_to_Object():
-    import uuid, make_tracks
-    for fname in os.listdir("../music"):
-        if fname.endswith(".mp3"):
-            name = os.path.splitext(fname)[0]
-            num_to_id[name] = uuid.uuid4()
+def fix_tracks():
+    from make_tracks import save_cover
+    tracks = {}
+    with open("../tracks.json", 'r', encoding="utf-8") as file:
+        for track_id, track in ijson.kvitems(file, ""):
+            cover_b64 = track.pop("cover", None)
+            track["cover"] = save_cover(cover_b64) if cover_b64 else None
+            tracks[track_id] = track
 
-            old_name = os.path.join("../music", f"{name}.mp3")
-            new_file = f"{num_to_id[name]}.mp3"
-            new_name = os.path.join("../music", new_file)
-            os.rename(old_name, new_name)
+    with open("../tracks.json", 'w', encoding="utf-8") as file:
+        json.dump(tracks, file, indent=4, ensure_ascii=False)
 
-            old_name = os.path.join("../music_embeddings", f"{name}.npy")
-            new_file = f"{num_to_id[name]}.npy"
-            new_name = os.path.join("../music_embeddings", new_file)
-            os.rename(old_name, new_name)
-    new_playlists = {}
-    for playlist in playlists:
-        new_playlists[playlist] = []
-        for i in playlists[playlist]:
-            new_playlists[playlist].append(num_to_id[i])
-    make_tracks.make_all_tracks()
-    with open("../playlists.json", 'w', encoding="utf-8") as file:
-        json.dump(new_playlists, file, indent=4, ensure_ascii=False)
+fix_tracks()

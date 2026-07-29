@@ -25,11 +25,11 @@ def loading_embedding():
     embeddings = []
     fnames = []
     with open("../tracks.json", 'r', encoding="utf-8") as file:
-        tracks = {}
-        for track_id, track in ijson.kvitems(file, ""):
-            track.pop("cover", None)
-            tracks[track_id] = track
-        # tracks = json.load(file)
+        # tracks = {}
+        # for track_id, track in ijson.kvitems(file, ""):
+        #     track.pop("cover", None)
+        #     tracks[track_id] = track
+        tracks = json.load(file)
     # Загрузка всех эмбеддингов
     for fname in os.listdir(output_dir):
         if fname.endswith(".npy") and fname[:-4] in tracks:

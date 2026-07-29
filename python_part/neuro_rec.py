@@ -13,11 +13,11 @@ eps = 3.4e-38 # минимум для избежания деления на н�
 music_dir = '../music'
 IDs = []
 with open("../tracks.json", 'r', encoding="utf-8") as file:
-    tracks = {}
-    for track_id, track in ijson.kvitems(file, ""):
-        track.pop("cover", None)
-        tracks[track_id] = track
-    # tracks = json.load(file)
+    # tracks = {}
+    # for track_id, track in ijson.kvitems(file, ""):
+    #     track.pop("cover", None)
+    #     tracks[track_id] = track
+    tracks = json.load(file)
 with open("../private_settings.json", 'r', encoding="utf-8") as file:
     settings = json.load(file)
     debug = settings["Debug"]
